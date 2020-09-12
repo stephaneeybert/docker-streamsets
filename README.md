@@ -80,12 +80,17 @@ Adding the MySQL Binary Log and JDBC Producer stage libraries to a pipeline
   In the pipeline view, in the right panel, select the Origins entry, type in mysql in the search field and select the MySQL Binary Log entry
   In the pipeline view, in the right panel, select the Destinations entry, type in jdbc in the search field and select the JDBC Producer entry
 
-Viewing a change data capture
+Previewing a change data capture
   Click on the Home icon
   Select an existing pipeline or create one
   Click on the Preview icon
   Do some data update in the MySQL database
   Watch the live preview of the data
+
+Start a pipeline
+  Click on the Home icon
+  Select an existing pipeline or create one
+  Click on the Start button
 
 Start the services
 ```  
