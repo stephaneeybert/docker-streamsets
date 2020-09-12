@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+  streamsets:
+    image: localhost:5000/streamsets:latest
+    ports:
+      - "18630:18630"
+    networks:
+      streamsets:
+      common:
+    volumes:
+#      TODO Permissions issues prevented me from using host volumes
+#      - "~/dev/docker/projects/streamsets/volumes/data:/data"
+      - "sdc-data:/data"
+#      - "~/dev/docker/projects/streamsets/volumes/stage-libs:/opt/streamsets-datacollector-3.18.1/streamsets-libs"
+      - "sdc-stagelibs:/opt/streamsets-datacollector-3.18.1/streamsets-libs"
+#      - "sdc-stagelibs-extra:/opt/stage-libs-extra"
+      - "~/dev/docker/projects/streamsets/volumes/stage-libs-extra:/opt/stage-libs-extra"
+      - "~/dev/docker/projects/streamsets/volumes/logs:/logs"
+    environment:
+      STREAMSETS_LIBRARIES_EXTRA_DIR: "/opt/stage-libs-extra"
+      HOST_USER_ID: ${CURRENT_UID}
+      HOST_GROUP_ID: ${CURRENT_GID}
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 10s
+    healthcheck:
+      test: curl --fail http://localhost:18630 || exit 1
+      interval: 1m
+      timeout: 3s
+      retries: 3
+volumes:
+  sdc-data:      
+  sdc-stagelibs:      
+  sdc-stagelibs-extra:      
+networks:
+  streamsets:
+    name: streamsets
+  common:  
+    external: true
+    name: common
