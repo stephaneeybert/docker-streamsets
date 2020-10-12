@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   streamsets:
-    image: localhost:5000/streamsets:latest
+    image: streamsets/datacollector
     ports:
       - "18630:18630"
     networks:
